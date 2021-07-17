@@ -17,3 +17,5 @@
     = f.label :password_confirmation, 'パスワード(確認)'
     = f.password_field :password_confirmation, required: true
   %p= f.submit '送信'
+
+%p=link_to 'ログインはこちら', login_path
