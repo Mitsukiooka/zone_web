@@ -1,4 +1,5 @@
 class TasksController < ApplicationController
+  before_action :login_required
 
   def index
     @tasks = Task.all
@@ -16,5 +17,9 @@ class TasksController < ApplicationController
 
   def task_params
     params.require(:task).permit(:name, :account_id, :password, :password_confirmation)
+  end
+
+  def login_required
+    redirect_to login_path unless loggend_in?
   end
 end
