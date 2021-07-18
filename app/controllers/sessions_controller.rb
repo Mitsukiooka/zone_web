@@ -6,7 +6,7 @@ class SessionsController < ApplicationController
     user = User.find_by(account_id: params[:session][:account_id])
     if user&.authenticate(params[:session][:password])
       login user
-      redirect_to root_path
+      redirect_to user_tasks_path(user.id)
     else
       flash.now[:alert] = 'アカウントID、またはパスワードが間違っています。'
       render 'new'

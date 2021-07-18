@@ -1,7 +1,37 @@
+-# %p
+-#   Welcome #{current_user.name} !!
+
+-# -@tasks.each do |task|
+-#   =task.name
+
+-# %p=link_to 'ログアウト', logout_path, method: :delete
+
 %p
-  Welcome #{current_user.name} !!
+  Welcome
 
--@tasks.each do |task|
-  =task.name
+-if @user == current_user
+  =form_with model: Task.new, local: true do |f|
+    =f.text_field :name, required: true
+    =f.submit '作成'
 
-%p=link_to 'ログアウト', logout_path, method: :delete
+%ul
+  -@tasks.each do |task|
+    %li
+      =check_box_tag "finished#{task.id}", true, task.finished, data: { id: task.id }, disabled: (@user != current_user)
+      =label_tag "finished#{task.id}", task.name
+
+=link_to 'ログアウト', logout_path, method: :delete
+
+- if @user == current_user
+  :javascript
+    $(document).ready(function(){
+      $('#task_name').focus();
+    });
+
+:css
+  li { list-style: none; }
+
+  :checked + label {
+    color: gray;
+    text-decoration: line-through;
+  }
