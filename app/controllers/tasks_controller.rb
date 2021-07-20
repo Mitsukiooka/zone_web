@@ -11,6 +11,12 @@ class TasksController < ApplicationController
     redirect_to Rails.application.routes.recognize_path(request.referer)
   end
 
+  def update
+    task = Task.find(params[:id])
+    redirect_to login_path if task.user != current_user
+    task.update(task_params)
+  end
+
   private
 
   def task_params

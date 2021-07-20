@@ -28,6 +28,19 @@
       $('#task_name').focus();
     });
 
+    $('input[type="checkbox"]').change(function() {
+      $.ajax('/tasks/' + $(this).data('id'), 
+      {
+        type: 'patch',
+        data: {
+          task: {
+            finished: $(this).prop('checked')
+          }
+        },
+        dataType: 'json'
+      })
+    });
+
 :css
   li { list-style: none; }
 
